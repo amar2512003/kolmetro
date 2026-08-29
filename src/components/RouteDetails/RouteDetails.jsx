@@ -77,7 +77,12 @@ export function RouteDetails({ route, stationMap, onReset }) {
         <h3 className="text-xl font-semibold text-white mb-3">{t('yourJourneySimplified')}</h3>
         <ServiceAlerts route={route} />
         <JourneySteps route={route} stationMap={stationMap} />
-        <FareCard route={route} sourceName={startStation.name} destinationName={endStation.name} />
+        <FareCard
+          route={route}
+          stationMap={stationMap}
+          sourceName={startStation.name}
+          destinationName={endStation.name}
+        />
         <GateInfo startStation={startStation} endStation={endStation} />
         <NearbyLandmarks stationId={endStation?.id} />
       </div>
