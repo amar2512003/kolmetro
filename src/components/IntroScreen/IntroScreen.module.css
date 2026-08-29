@@ -1,0 +1,117 @@
+.introVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.introOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.35) 55%,
+      rgba(0, 0, 0, 0.75) 100%
+    );
+}
+
+.introTextWrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.introText {
+  position: relative;
+
+  /* Modern, premium typography */
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+
+  font-size: clamp(2.4rem, 7vw, 6rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+
+  color: #ffffff;
+
+  /* Subtle metro-style glow */
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.35),
+    0 0 35px rgba(220, 38, 38, 0.35);
+
+  /* Entrance animation */
+  animation: titleReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Small red accent underneath */
+.introText::after {
+  content: "";
+  display: block;
+
+  width: 70px;
+  height: 4px;
+
+  margin: 18px auto 0;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    #ef4444,
+    #dc2626
+  );
+
+  box-shadow:
+    0 0 12px rgba(239, 68, 68, 0.7),
+    0 0 28px rgba(239, 68, 68, 0.35);
+
+  animation: accentReveal 1.2s 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes titleReveal {
+  from {
+    opacity: 0;
+    transform: translateY(35px) scale(0.96);
+    filter: blur(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes accentReveal {
+  from {
+    opacity: 0;
+    width: 0;
+    transform: scaleX(0);
+  }
+
+  to {
+    opacity: 1;
+    width: 70px;
+    transform: scaleX(1);
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .introText {
+    font-size: clamp(2.3rem, 12vw, 4rem);
+    letter-spacing: -0.055em;
+  }
+
+  .introText::after {
+    width: 55px;
+    height: 3px;
+    margin-top: 14px;
+  }
+}
