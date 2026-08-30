@@ -56,13 +56,46 @@ function Ticket({ fare, source, destination, label }) {
   );
 }
 
-// A purple-line segment is never connected to the rest of the network by
-// track — only by a maintenance-gap hop (auto/bus). Detect it by key first,
-// falling back to the display name in case the key differs from 'purple'.
-function isPurpleSegment(segment) {
-  if (!segment.line) return false;
-  if (segment.line.key === 'purple') return true;
-  return segment.line.name?.toLowerCase().includes('purple') ?? false;
+// Groups a route's line segments by maintenance-gap boundaries. Every
+// maintenance-gap hop (segment.line === null, no fare of its own) marks a
+// point where the journey is NOT physically continuous track — just an
+// auto/bus detour arranged between two disconnected legs. This is generic
+// rather than tied to any one line: Purple<->Blue via Taratala/Kalighat,
+// Orange<->Blue via Shahid Khudiram/Satyajit Ray, or any future pair
+// joined the same way all hit this same split.
+function groupSegmentsByMaintenanceGap(segments) {
+  const groups = [];
+  let current = [];
+  segments.forEach((segment) => {
+    if (!segment.line) {
+      if (current.length > 0) groups.push(current);
+      current = [];
+    } else {
+      current.push(segment);
+    }
+  });
+  if (current.length > 0) groups.push(current);
+  return groups;
+}
+
+function summarizeGroup(group, stationMap) {
+  let fare = 0;
+  let calculated = true;
+  group.forEach((segment) => {
+    const result = calculateSegmentFare(segment);
+    fare += result.fare;
+    if (!result.calculated) calculated = false;
+  });
+
+  const first = group[0];
+  const last = group[group.length - 1];
+  const source = stationMap.get(first.stations[0])?.name;
+  const destination = stationMap.get(last.stations[last.stations.length - 1])?.name;
+
+  const lineNames = new Set(group.map((segment) => segment.line.name));
+  const label = lineNames.size === 1 ? `Kolkata Metro — ${[...lineNames][0]}` : 'Metro Railway Kolkata';
+
+  return { fare, calculated, source, destination, label };
 }
 
 export function FareCard({ route, stationMap, sourceName, destinationName }) {
@@ -71,10 +104,10 @@ export function FareCard({ route, stationMap, sourceName, destinationName }) {
   if (!route || route.length < 2 || !stationMap) return null;
 
   const segments = splitRouteIntoLineSegments(route);
-  const purpleIndex = segments.findIndex(isPurpleSegment);
+  const groups = groupSegmentsByMaintenanceGap(segments);
 
-  // No purple leg on this route: single ticket, same as before.
-  if (purpleIndex === -1) {
+  // No maintenance-gap split on this route: single ticket, same as before.
+  if (groups.length <= 1) {
     const { fare, calculated } = calculateFare(route);
     if (!calculated || fare < 0) return null;
 
@@ -85,54 +118,23 @@ export function FareCard({ route, stationMap, sourceName, destinationName }) {
     );
   }
 
-  const purpleSegment = segments[purpleIndex];
-  const purpleResult = calculateSegmentFare(purpleSegment);
+  const tickets = groups.map((group) => summarizeGroup(group, stationMap));
+  if (tickets.some((ticket) => !ticket.calculated)) return null;
 
-  // Every other priced (non-maintenance-gap) segment is combined into one
-  // "normal" ticket, named by its own boundary stations — not the overall
-  // route's start/end, since those belong to the purple leg when it sits
-  // at one end of the journey.
-  const restLineSegments = segments.filter((seg, i) => i !== purpleIndex && seg.line);
-
-  let restFare = 0;
-  let restCalculated = true;
-  segments.forEach((seg, i) => {
-    if (i === purpleIndex) return;
-    const result = calculateSegmentFare(seg);
-    restFare += result.fare;
-    if (!result.calculated) restCalculated = false;
-  });
-
-  if (!purpleResult.calculated || !restCalculated) return null;
-
-  const purpleSource = stationMap.get(purpleSegment.stations[0])?.name;
-  const purpleDestination = stationMap.get(purpleSegment.stations[purpleSegment.stations.length - 1])?.name;
-
-  // Whole route was on the purple line (no other segment): just one ticket.
-  if (restLineSegments.length === 0) {
-    return (
-      <div className="mt-4 flex justify-center">
-        <Ticket fare={purpleResult.fare} source={purpleSource} destination={purpleDestination} label="Kolkata Metro — Purple Line" />
-      </div>
-    );
-  }
-
-  const firstRest = restLineSegments[0];
-  const lastRest = restLineSegments[restLineSegments.length - 1];
-  const restSource = stationMap.get(firstRest.stations[0])?.name;
-  const restDestination = stationMap.get(lastRest.stations[lastRest.stations.length - 1])?.name;
+  const totalFare = tickets.reduce((sum, ticket) => sum + ticket.fare, 0);
 
   return (
     <div className="mt-4 flex flex-col items-center gap-3">
       <p className="text-xs text-yellow-400/90 max-w-xs text-center px-2">
-        The Purple Line isn't connected to the rest of the network — you'll need two separate tickets for this journey.
+        Part of this journey is a maintenance detour between lines — you&apos;ll need {tickets.length} separate tickets for this journey.
       </p>
-      <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start">
-        <Ticket fare={purpleResult.fare} source={purpleSource} destination={purpleDestination} label="Kolkata Metro — Purple Line" />
-        <Ticket fare={restFare} source={restSource} destination={restDestination} />
+      <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start flex-wrap justify-center">
+        {tickets.map((ticket, i) => (
+          <Ticket key={i} fare={ticket.fare} source={ticket.source} destination={ticket.destination} label={ticket.label} />
+        ))}
       </div>
       <p className="text-sm text-gray-300">
-        Total fare needed : <span className="font-semibold text-white">Rs.{(purpleResult.fare + restFare).toFixed(2)}</span>
+        Total fare needed : <span className="font-semibold text-white">Rs.{totalFare.toFixed(2)}</span>
       </p>
     </div>
   );

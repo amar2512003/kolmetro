@@ -1,6 +1,5 @@
 import { createPortal } from 'react-dom';
 import { useTranslation } from '../../context/LanguageContext.jsx';
-import { ServiceAlerts } from './ServiceAlerts.jsx';
 import { JourneySteps } from './JourneySteps.jsx';
 import { FareCard } from './FareCard.jsx';
 import { GateInfo } from './GateInfo.jsx';
@@ -42,6 +41,8 @@ function SearchAgainButton({ onReset }) {
 // array = a valid station-id path.
 // onReset: optional — when provided, shows the fixed "Search Again" button
 // that lets the wizard flow start over from step 1.
+// (Service alerts are no longer a separate block — JourneySteps now shows
+// each line's live status as a badge on the relevant timeline step.)
 export function RouteDetails({ route, stationMap, onReset }) {
   const { t } = useTranslation();
 
@@ -75,7 +76,6 @@ export function RouteDetails({ route, stationMap, onReset }) {
       <SearchAgainButton onReset={onReset} />
       <div className="mt-2 text-center p-2">
         <h3 className="text-xl font-semibold text-white mb-3">{t('yourJourneySimplified')}</h3>
-        <ServiceAlerts route={route} />
         <JourneySteps route={route} stationMap={stationMap} />
         <FareCard
           route={route}
