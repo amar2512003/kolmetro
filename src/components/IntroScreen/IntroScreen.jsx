@@ -11,30 +11,45 @@ export function IntroScreen({ visible, onSkip }) {
     const video = videoRef.current;
     if (!video) return;
 
-    // The autoPlay attribute alone is unreliable on mobile Safari/Android
-    // WebView for a video inserted dynamically by React — explicitly
-    // request playback, and retry once metadata has actually loaded in
-    // case the first attempt fired before the video was ready.
+    let retryTimer;
+    let attempts = 0;
+    const MAX_ATTEMPTS = 5;
+
+    // autoPlay alone is unreliable on mobile Safari/Android WebView for a
+    // video inserted dynamically by React. Explicitly request playback,
+    // and if it doesn't take immediately, retry a few times with a short
+    // backoff — some mobile browsers need the element to fully settle
+    // before play() actually takes effect, even after loadedmetadata.
     const tryPlay = () => {
       const playPromise = video.play();
-      if (playPromise && typeof playPromise.catch === 'function') {
-        playPromise.catch(() => {
-          // Autoplay was blocked outright (e.g. device-level restriction) —
-          // don't leave the user staring at a frozen first frame forever.
-          onSkip?.();
-        });
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise
+          .then(() => {
+            attempts = 0;
+          })
+          .catch(() => {
+            if (attempts < MAX_ATTEMPTS) {
+              attempts += 1;
+              retryTimer = setTimeout(tryPlay, 300 * attempts);
+            }
+          });
       }
     };
 
     tryPlay();
     video.addEventListener('loadedmetadata', tryPlay);
-    return () => video.removeEventListener('loadedmetadata', tryPlay);
-  }, [onSkip]);
+    video.addEventListener('canplay', tryPlay);
+
+    return () => {
+      clearTimeout(retryTimer);
+      video.removeEventListener('loadedmetadata', tryPlay);
+      video.removeEventListener('canplay', tryPlay);
+    };
+  }, []);
 
   return (
     <div
-      onClick={onSkip}
-      className={`fixed inset-0 z-50 overflow-hidden bg-black transition-opacity duration-1000 ease-in-out cursor-pointer ${
+      className={`fixed inset-0 z-50 overflow-hidden bg-black transition-opacity duration-1000 ease-in-out ${
         visible ? '' : 'opacity-0 pointer-events-none'
       }`}
     >
@@ -45,6 +60,7 @@ export function IntroScreen({ visible, onSkip }) {
         autoPlay
         muted
         playsInline
+        preload="auto"
         onEnded={onSkip}
       />
 
@@ -53,8 +69,6 @@ export function IntroScreen({ visible, onSkip }) {
       <div className={styles.introTextWrap}>
         <span className={styles.introText}>{t('appTitle')}</span>
       </div>
-
-      <p className={styles.introTapHint}>{t('tapToSkip')}</p>
     </div>
   );
 }
