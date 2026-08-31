@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from '../../context/LanguageContext.jsx';
 import { buildTimelineSteps } from '../../lib/journeyTimeline.js';
+import { calculateTravel } from '../../lib/travelEstimate.js';
 import { to12Hour } from '../../lib/scheduleStatus.js';
 
 const TYPE_SPEED_MS = 28;
@@ -64,11 +65,15 @@ export function JourneySteps({ route, stationMap }) {
 
   const steps = useMemo(() => buildTimelineSteps(route, stationMap), [route, stationMap]);
   const stepTexts = useMemo(() => steps.map((s) => stepText(s, t)), [steps, t]);
+  const travel = useMemo(() => calculateTravel(route), [route]);
 
   // typed[i]: the currently-revealed substring of stepTexts[i].
   // lineGrown[i]: whether the connector below step i has finished drawing.
+  // sequenceDone: true once the final step has fully typed out — used to
+  // reveal the trip-summary line as a natural closing beat.
   const [typed, setTyped] = useState([]);
   const [lineGrown, setLineGrown] = useState([]);
+  const [sequenceDone, setSequenceDone] = useState(false);
 
   // Runs the whole type -> grow-line -> type-next sequence from scratch
   // whenever the route (or the translated text, e.g. on a language
@@ -81,6 +86,7 @@ export function JourneySteps({ route, stationMap }) {
 
     setTyped(stepTexts.map(() => ''));
     setLineGrown(steps.map(() => false));
+    setSequenceDone(false);
 
     function typeStep(i) {
       if (cancelled || i >= stepTexts.length) return;
@@ -97,6 +103,8 @@ export function JourneySteps({ route, stationMap }) {
           clearInterval(charTimer);
           if (i < stepTexts.length - 1) {
             pauseTimer = setTimeout(() => growLine(i), PAUSE_BEFORE_LINE_MS);
+          } else {
+            setSequenceDone(true);
           }
         }
       }, TYPE_SPEED_MS);
@@ -173,6 +181,20 @@ export function JourneySteps({ route, stationMap }) {
           </div>
         );
       })}
+
+      {sequenceDone && travel.calculated && (
+        <div
+          className="flex items-center gap-2 mt-1 pl-6 text-sm text-purple-300"
+          style={{ opacity: 0, animation: 'fadeInUp 0.4s ease forwards' }}
+        >
+          <svg className="w-4 h-4 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+          </svg>
+          <span>
+            {travel.distanceKm.toFixed(1)} km · {Math.round(travel.minutes)} min
+          </span>
+        </div>
+      )}
     </div>
   );
 }
