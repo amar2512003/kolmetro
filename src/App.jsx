@@ -95,7 +95,7 @@ function MainContent() {
       <footer className="w-full max-w-5xl text-center mt-8 mb-4 text-sm text-zinc-500 flex items-center justify-center gap-2">
         <span>Built by Amar</span>
         <a
-          href="https://github.com/amar2512003"
+          href="https://v0-amarsinhaaa.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-purple-400 hover:text-purple-300 transition-colors"
