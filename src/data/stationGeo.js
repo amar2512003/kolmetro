@@ -1,11 +1,17 @@
 // Real-world approximate lat/lng for each station (WGS84), used to plot
-// stations on the actual OpenStreetMap/Leaflet map. These are close
-// approximations for a working demo — swap in survey-accurate
-// coordinates later if you need pinpoint precision.
+// stations on the actual Google Map (see MetroMap.jsx). These are close
+// approximations for a working demo, not survey-grade coordinates — a
+// few (mainly on the Blue, Green and Purple lines, which are real/open
+// lines) are close to their real-world positions, but most, especially
+// on lines with invented station names, are placeholder points spaced
+// along a plausible route. Verify/replace with exact coordinates
+// (e.g. from Google's Geocoding API or OpenStreetMap Nominatim) station
+// by station if you need pinpoint accuracy against the live Google
+// basemap.
 //
 // Note: the old inline `stationCoords` object (a schematic x/y grid for
 // a hand-drawn SVG map) has been dropped here since the app now only
-// renders the real Leaflet map. Re-add a schematicCoords.js file if you
+// renders the real Google Map. Re-add a schematicCoords.js file if you
 // want to bring back a non-geographic diagram view.
 export const stationGeo = {
   // Blue Line (Dakshineswar -> Kavi Subhash)

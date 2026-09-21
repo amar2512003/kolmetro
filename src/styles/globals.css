@@ -16,28 +16,6 @@ body {
   min-height: 100vh;
 }
 
-/* User's live-location marker on the Leaflet map — see
-   components/MetroMap/UserLocationMarker.jsx (L.divIcon className). */
-.metro-user-marker {
-  background: #22d3ee;
-  border: 2px solid white;
-  border-radius: 50%;
-  width: 14px;
-  height: 14px;
-  box-shadow: 0 0 8px 2px rgba(34, 211, 238, 0.8);
-}
-
-/* Dark-themed Leaflet popups to match the app's palette (station info,
-   "You are here" popup). */
-.leaflet-popup-content-wrapper {
-  background: #1e1b4b;
-  color: #e5e7eb;
-  border-radius: 8px;
-}
-.leaflet-popup-tip {
-  background: #1e1b4b;
-}
-
 /* Wizard step entrance animations — see TypewriterText and the
    Wizard/*Step.jsx reveal cascade. */
 @keyframes blink {
@@ -48,12 +26,4 @@ body {
 @keyframes fadeInUp {
   0% { opacity: 0; transform: translateY(12px); }
   100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Darkens the standard (detailed) OSM tile layer via CSS filter instead of
-   switching to a separate low-detail dark tile provider. invert(1) flips
-   light<->dark, hue-rotate(180deg) corrects the resulting color hues back
-   toward natural-ish tones (water, greenery, roads). See MetroMap.jsx. */
-.map-tiles-dark {
-  filter: invert(1) hue-rotate(180deg) brightness(0.95) contrast(0.9) saturate(0.75);
 }

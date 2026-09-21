@@ -53,7 +53,7 @@ export const en = {
   statusUnavailable: 'Status unavailable',
   unknownLabel: 'Unknown',
   youAreHere: 'You are here',
-  mapFailed: "Map library failed to load — check your internet connection or that leaflet CDN scripts aren't blocked, then refresh.",
+  mapFailed: "Map library failed to load — check your internet connection or that Google Maps scripts aren't blocked, then refresh.",
   // Wizard flow
   nearestStationTitle: 'Your Nearest Metro Station',
   nearestStationSubtitle: 'Search for a station, or let us locate you.',
