@@ -58,6 +58,7 @@ export const bn = {
   destinationSubtitle: 'আপনি কোথায় যাচ্ছেন?',
   locateMeButton: 'আমাকে খুঁজুন',
   useThisStation: 'এই স্টেশন ব্যবহার করুন',
+  getDirections: 'দিকনির্দেশ',
   or: 'অথবা',
   backLabel: 'পিছনে',
   newSearch: 'নতুন অনুসন্ধান',

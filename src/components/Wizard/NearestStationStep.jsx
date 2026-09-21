@@ -3,6 +3,7 @@ import { useTranslation } from '../../context/LanguageContext.jsx';
 import { StationSearchInput } from '../StationSearchInput/StationSearchInput.jsx';
 import { TypewriterText } from '../shared/TypewriterText.jsx';
 import { StepProgress } from './StepProgress.jsx';
+import { stationGeo } from '../../data/stationGeo.js';
 
 export function NearestStationStep({ allStations, onSelectStation, geo, nearestResult }) {
   const { t } = useTranslation();
@@ -85,6 +86,38 @@ export function NearestStationStep({ allStations, onSelectStation, geo, nearestR
           <p className="text-xs text-zinc-500 mb-3">
             {t('approxAway', { d: nearestResult.distanceKm.toFixed(1) })}
           </p>
+          {geo.position &&
+            (() => {
+              const destGeo = stationGeo[nearestResult.station.id];
+              if (!destGeo) return null;
+              const origin = `${geo.position.latitude},${geo.position.longitude}`;
+              const destination = `${destGeo[0]},${destGeo[1]}`;
+              const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=walking`;
+              return (
+                <a
+                  href={directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mb-3 flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-purple-700/50 bg-transparent hover:bg-purple-500/10 text-purple-200 font-semibold transition-colors"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                    />
+                  </svg>
+                  {t('getDirections')}
+                </a>
+              );
+            })()}
           <button
             type="button"
             onClick={() => onSelectStation(nearestResult.station.id)}

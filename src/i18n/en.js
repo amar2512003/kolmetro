@@ -61,6 +61,7 @@ export const en = {
   destinationSubtitle: 'Where are you headed?',
   locateMeButton: 'Locate Me',
   useThisStation: 'Use this station',
+  getDirections: 'Directions',
   or: 'or',
   backLabel: 'Back',
   newSearch: 'New Search',

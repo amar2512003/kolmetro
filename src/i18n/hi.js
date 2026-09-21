@@ -58,6 +58,7 @@ export const hi = {
   destinationSubtitle: 'आप कहाँ जा रहे हैं?',
   locateMeButton: 'मुझे खोजें',
   useThisStation: 'यह स्टेशन उपयोग करें',
+  getDirections: 'दिशा-निर्देश',
   or: 'या',
   backLabel: 'वापस',
   newSearch: 'नई खोज',

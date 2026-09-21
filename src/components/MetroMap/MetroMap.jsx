@@ -16,6 +16,8 @@ const MAP_OPTIONS = {
   disableDefaultUI: false,
   clickableIcons: false,
   backgroundColor: '#1e1b4b',
+  mapTypeId: 'hybrid',
+  mapTypeControl: false,
 };
 
 function toLatLng([lat, lng]) {
@@ -35,11 +37,11 @@ export function MetroMap({ route, userPosition, nearestStationId }) {
 
   const onLoad = useCallback((map) => {
     mapRef.current = map;
-  }, []);
+  })();
 
   const onUnmount = useCallback(() => {
     mapRef.current = null;
-  }, []);
+  })();
 
   const routeLatLngs = useMemo(
     () => (route ? route.map((id) => stationGeo[id]).filter(Boolean).map(toLatLng) : []),
@@ -49,7 +51,7 @@ export function MetroMap({ route, userPosition, nearestStationId }) {
   // Flatten every line's stations into one array of markers, de-duped by
   // station id (interchange stations appear on multiple lines but should
   // only get a single pin — take the first line's color for it).
-  const stationMarkers = useMemo(() => {
+  const stationMarkers = (() => {
     const seen = new Map();
     for (const line of Object.values(metroData)) {
       for (const station of line.stations) {
@@ -65,7 +67,7 @@ export function MetroMap({ route, userPosition, nearestStationId }) {
       }
     }
     return Array.from(seen.values());
-  }, []);
+  })();
 
   if (loadError) {
     return (
@@ -86,7 +88,7 @@ export function MetroMap({ route, userPosition, nearestStationId }) {
 
   return (
     <div className="w-full rounded-lg overflow-hidden" style={{ height: 600 }}>
-      <GoogleMap
+      <GoogleMap key="force-reload-1"
         mapContainerStyle={MAP_CONTAINER_STYLE}
         center={KOLKATA_CENTER}
         zoom={DEFAULT_ZOOM}

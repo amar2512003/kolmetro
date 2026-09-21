@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from '../../context/LanguageContext.jsx';
+import { stationGeo } from '../../data/stationGeo.js';
 import { findLandmarksNear } from '../../lib/geo.js';
 import { landmarkImageCandidates } from '../../lib/landmarkImage.js';
 
@@ -47,9 +48,22 @@ export function NearbyLandmarks({ stationId }) {
         {nearby.map(({ landmark, distanceKm }, i) => (
           <div
             key={landmark.name}
-            className={`bg-white p-2.5 pb-3 rounded-sm shadow-lg shadow-black/50 ${TILTS[i % TILTS.length]} hover:rotate-0 hover:scale-105 hover:z-10 transition-transform duration-300 ease-out`}
+            className={`relative bg-white p-2.5 pb-3 rounded-sm shadow-lg shadow-black/50 ${TILTS[i % TILTS.length]} hover:rotate-0 hover:scale-105 hover:z-10 transition-transform duration-300 ease-out group`}
           >
-            <LandmarkPhoto name={landmark.name} />
+            <div className="relative">
+              <LandmarkPhoto name={landmark.name} />
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&origin=${stationGeo[stationId][0]},${stationGeo[stationId][1]}&destination=${landmark.lat},${landmark.lng}&travelmode=walking`}
+                target="_blank"
+                rel="noreferrer"
+                title="Get Directions"
+                className="absolute top-2 right-2 w-8 h-8 bg-black/60 hover:bg-black/90 text-white rounded-full flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity backdrop-blur-sm shadow-md"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                </svg>
+              </a>
+            </div>
             <div className="pt-2.5 text-center">
               <p
                 className="text-neutral-800 leading-tight truncate"
