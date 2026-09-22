@@ -15,6 +15,14 @@ export function IntroScreen({ visible, onSkip }) {
     let attempts = 0;
     const MAX_ATTEMPTS = 5;
 
+    // iOS Safari checks the live `muted` DOM property before allowing
+    // autoplay, but React only reflects the JSX `muted` attribute onto the
+    // element unreliably for dynamically mounted <video> elements. Without
+    // this, play() silently rejects on iOS and the native play button
+    // shows instead of the video autoplaying.
+    video.muted = true;
+    video.defaultMuted = true;
+
     // autoPlay alone is unreliable on mobile Safari/Android WebView for a
     // video inserted dynamically by React. Explicitly request playback,
     // and if it doesn't take immediately, retry a few times with a short
