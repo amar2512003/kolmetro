@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState, useCallback } from 'react';
-import { translate, translateName } from '../i18n/index.js';
+import { translate, translateName, translateGate, translateGateLabel } from '../i18n/index.js';
 
 const LanguageContext = createContext(null);
 
@@ -10,7 +10,11 @@ export function LanguageProvider({ children }) {
   // tn(englishName) — translates a proper noun (station / line / landmark).
   const tn = useCallback((name) => translateName(lang, name), [lang]);
 
-  const value = useMemo(() => ({ lang, setLang, t, tn }), [lang, t, tn]);
+  // tg(englishGateDesc) — translates a gate description; tgl(label) — a gate number label ('1 & 3').
+  const tg = useCallback((desc) => translateGate(lang, desc), [lang]);
+  const tgl = useCallback((label) => translateGateLabel(lang, label), [lang]);
+
+  const value = useMemo(() => ({ lang, setLang, t, tn, tg, tgl }), [lang, t, tn, tg, tgl]);
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }

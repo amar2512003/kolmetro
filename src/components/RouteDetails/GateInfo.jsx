@@ -1,7 +1,7 @@
 import { useTranslation } from '../../context/LanguageContext.jsx';
 
 export function GateInfo({ startStation, endStation }) {
-  const { t, tn } = useTranslation();
+  const { t, tn, tg, tgl } = useTranslation();
 
   if (!startStation?.gates && !endStation?.gates) return null;
 
@@ -21,8 +21,8 @@ export function GateInfo({ startStation, endStation }) {
             <div className="flex flex-col gap-1.5">
               {Object.entries(startStation.gates).map(([gateNum, desc]) => (
                 <div key={gateNum} className="flex items-baseline gap-2 text-sm">
-                  <span className="font-mono text-purple-300 min-w-[1.5rem] shrink-0">{gateNum}</span>
-                  <span className="text-gray-400">{desc}</span>
+                  <span className="font-mono text-purple-300 min-w-[1.5rem] shrink-0">{tgl(gateNum)}</span>
+                  <span className="text-gray-400">{tg(desc)}</span>
                 </div>
               ))}
             </div>
@@ -40,8 +40,8 @@ export function GateInfo({ startStation, endStation }) {
             <div className="flex flex-col gap-1.5">
               {Object.entries(endStation.gates).map(([gateNum, desc]) => (
                 <div key={gateNum} className="flex items-baseline gap-2 text-sm">
-                  <span className="font-mono text-pink-300 min-w-[1.5rem] shrink-0">{gateNum}</span>
-                  <span className="text-gray-400">{desc}</span>
+                  <span className="font-mono text-pink-300 min-w-[1.5rem] shrink-0">{tgl(gateNum)}</span>
+                  <span className="text-gray-400">{tg(desc)}</span>
                 </div>
               ))}
             </div>
