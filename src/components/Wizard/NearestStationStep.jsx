@@ -6,7 +6,7 @@ import { StepProgress } from './StepProgress.jsx';
 import { stationGeo } from '../../data/stationGeo.js';
 
 export function NearestStationStep({ allStations, onSelectStation, geo, nearestResult }) {
-  const { t } = useTranslation();
+  const { t, tn } = useTranslation();
   const { status, errorType, locate } = geo;
 
   const [titleDone, setTitleDone] = useState(false);
@@ -82,7 +82,7 @@ export function NearestStationStep({ allStations, onSelectStation, geo, nearestR
           style={{ animation: 'fadeInUp 0.4s ease forwards' }}
         >
           <p className="text-xs text-zinc-500 uppercase tracking-wide">{t('nearestStationLabel')}</p>
-          <p className="text-lg font-semibold text-white mt-0.5">{nearestResult.station.name}</p>
+          <p className="text-lg font-semibold text-white mt-0.5">{tn(nearestResult.station.name)}</p>
           <p className="text-xs text-zinc-500 mb-3">
             {t('approxAway', { d: nearestResult.distanceKm.toFixed(1) })}
           </p>

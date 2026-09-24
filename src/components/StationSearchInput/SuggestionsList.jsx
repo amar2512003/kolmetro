@@ -1,4 +1,8 @@
+import { useTranslation } from '../../context/LanguageContext.jsx';
+
 export function SuggestionsList({ stations, landmarkMatches, onSelectStation, onSelectLandmark }) {
+  const { tn } = useTranslation();
+
   if (stations.length === 0 && landmarkMatches.length === 0) return null;
 
   return (
@@ -10,7 +14,7 @@ export function SuggestionsList({ stations, landmarkMatches, onSelectStation, on
           className="p-3 hover:bg-gray-700 cursor-pointer text-gray-100"
           onMouseDown={() => onSelectStation(station)}
         >
-          {station.name}
+          {tn(station.name)}
         </div>
       ))}
 
@@ -22,11 +26,11 @@ export function SuggestionsList({ stations, landmarkMatches, onSelectStation, on
         >
           <div className="flex items-center gap-2 text-gray-100">
             <span>📍</span>
-            <span>{landmark.name}</span>
+            <span>{tn(landmark.name)}</span>
           </div>
           {station ? (
             <div className="absolute z-10 w-full mt-1 bg-zinc-950 border border-purple-800/50 rounded-lg shadow-xl shadow-black/60 max-h-60 overflow-y-auto">
-              → {station.name} ({distanceKm.toFixed(1)} km)
+              → {tn(station.name)} ({distanceKm.toFixed(1)} km)
             </div>
           ) : (
             <div className="text-xs text-gray-500 pl-6 mt-0.5">No nearby station found</div>

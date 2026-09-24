@@ -1,4 +1,5 @@
 import { useTranslation } from '../../context/LanguageContext.jsx';
+import { translateName } from '../../i18n/nameTranslations.js';
 import { calculateFare, calculateSegmentFare } from '../../lib/fareCalculator.js';
 import { splitRouteIntoLineSegments } from '../../lib/routing.js';
 
@@ -78,7 +79,7 @@ function groupSegmentsByMaintenanceGap(segments) {
   return groups;
 }
 
-function summarizeGroup(group, stationMap) {
+function summarizeGroup(group, stationMap, lang) {
   let fare = 0;
   let calculated = true;
   group.forEach((segment) => {
@@ -89,17 +90,17 @@ function summarizeGroup(group, stationMap) {
 
   const first = group[0];
   const last = group[group.length - 1];
-  const source = stationMap.get(first.stations[0])?.name;
-  const destination = stationMap.get(last.stations[last.stations.length - 1])?.name;
+  const source = translateName(lang, stationMap.get(first.stations[0])?.name);
+  const destination = translateName(lang, stationMap.get(last.stations[last.stations.length - 1])?.name);
 
-  const lineNames = new Set(group.map((segment) => segment.line.name));
+  const lineNames = new Set(group.map((segment) => translateName(lang, segment.line.name)));
   const label = lineNames.size === 1 ? `Kolkata Metro — ${[...lineNames][0]}` : 'Metro Railway Kolkata';
 
   return { fare, calculated, source, destination, label };
 }
 
 export function FareCard({ route, stationMap, sourceName, destinationName }) {
-  useTranslation();
+  const { lang } = useTranslation();
 
   if (!route || route.length < 2 || !stationMap) return null;
 
@@ -118,7 +119,7 @@ export function FareCard({ route, stationMap, sourceName, destinationName }) {
     );
   }
 
-  const tickets = groups.map((group) => summarizeGroup(group, stationMap));
+  const tickets = groups.map((group) => summarizeGroup(group, stationMap, lang));
   if (tickets.some((ticket) => !ticket.calculated)) return null;
 
   const totalFare = tickets.reduce((sum, ticket) => sum + ticket.fare, 0);

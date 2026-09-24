@@ -44,7 +44,7 @@ function SearchAgainButton({ onReset }) {
 // (Service alerts are no longer a separate block — JourneySteps now shows
 // each line's live status as a badge on the relevant timeline step.)
 export function RouteDetails({ route, stationMap, onReset }) {
-  const { t } = useTranslation();
+  const { t, tn } = useTranslation();
 
   if (route === undefined) {
     return (
@@ -80,8 +80,8 @@ export function RouteDetails({ route, stationMap, onReset }) {
         <FareCard
           route={route}
           stationMap={stationMap}
-          sourceName={startStation.name}
-          destinationName={endStation.name}
+          sourceName={tn(startStation.name)}
+          destinationName={tn(endStation.name)}
         />
         <GateInfo startStation={startStation} endStation={endStation} />
         <NearbyLandmarks stationId={endStation?.id} />

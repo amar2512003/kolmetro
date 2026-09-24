@@ -1,5 +1,6 @@
 import { GoogleMap, useJsApiLoader, Polyline, Marker, InfoWindow } from '@react-google-maps/api';
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { useTranslation } from '../../context/LanguageContext.jsx';
 import { metroData } from '../../data/lines/index.js';
 import { stationGeo } from '../../data/stationGeo.js';
 import { googleMapDarkStyle } from '../../data/googleMapDarkStyle.js';
@@ -25,6 +26,7 @@ function toLatLng([lat, lng]) {
 }
 
 export function MetroMap({ route, userPosition, nearestStationId }) {
+  const { tn } = useTranslation();
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'kolmetro-google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -146,9 +148,9 @@ export function MetroMap({ route, userPosition, nearestStationId }) {
               {activeStation === station.id && (
                 <InfoWindow position={toLatLng(geo)} onCloseClick={() => setActiveStation(null)}>
                   <div style={{ color: '#1e1b4b' }}>
-                    <strong>{station.name}</strong>
+                    <strong>{tn(station.name)}</strong>
                     <br />
-                    {station.lineName}
+                    {tn(station.lineName)}
                     {station.isUC ? ' (under construction)' : ''}
                   </div>
                 </InfoWindow>

@@ -4,7 +4,7 @@ import { splitRouteIntoLineSegments } from '../../lib/routing.js';
 import { computeLineStatus, to12Hour } from '../../lib/scheduleStatus.js';
 
 export function ServiceAlerts({ route }) {
-  const { t } = useTranslation();
+  const { t, tn } = useTranslation();
   const now = new Date();
   const segments = splitRouteIntoLineSegments(route);
 
@@ -27,7 +27,7 @@ export function ServiceAlerts({ route }) {
         if (result.status === 'closed') {
           return (
             <div key={key} className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg text-red-300">
-              <strong>{t('serviceAlert')}</strong> {t('serviceEndedLabel')} {result.lineName}{' '}
+              <strong>{t('serviceAlert')}</strong> {t('serviceEndedLabel')} {tn(result.lineName)}{' '}
               {t('doesNotRunOn')} {result.dayName}
               {t('onDaySuffix')}
             </div>
@@ -36,7 +36,7 @@ export function ServiceAlerts({ route }) {
         if (result.status === 'before-first') {
           return (
             <div key={key} className="bg-yellow-500/10 border border-yellow-500/30 p-3 rounded-lg text-yellow-300">
-              <strong>{t('timingAlert')}</strong> {result.lineName} {t('hasntStarted')}{' '}
+              <strong>{t('timingAlert')}</strong> {tn(result.lineName)} {t('hasntStarted')}{' '}
               {to12Hour(result.entry.first)}.
             </div>
           );
@@ -44,7 +44,7 @@ export function ServiceAlerts({ route }) {
         if (result.status === 'after-last') {
           return (
             <div key={key} className="bg-yellow-500/10 border border-yellow-500/30 p-3 rounded-lg text-yellow-300">
-              <strong>{t('timingAlert')}</strong> {t('serviceEndedLabel')} {result.lineName}{' '}
+              <strong>{t('timingAlert')}</strong> {t('serviceEndedLabel')} {tn(result.lineName)}{' '}
               {t('forThisStretchEnded')} {to12Hour(result.entry.last)}
               {result.entry.lastNote ? ` (${result.entry.lastNote})` : ''}.
             </div>
@@ -53,7 +53,7 @@ export function ServiceAlerts({ route }) {
         if (result.status === 'available') {
           return (
             <div key={key} className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg text-green-300">
-              <strong>{t('metroAvailableLabel')}</strong> {result.lineName} {t('isRunningNow')}{' '}
+              <strong>{t('metroAvailableLabel')}</strong> {tn(result.lineName)} {t('isRunningNow')}{' '}
               {to12Hour(result.entry.last)}
               {result.entry.lastNote ? `, ${result.entry.lastNote}` : ''}).
             </div>

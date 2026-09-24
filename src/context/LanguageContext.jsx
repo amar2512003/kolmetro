@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState, useCallback } from 'react';
-import { translate } from '../i18n/index.js';
+import { translate, translateName } from '../i18n/index.js';
 
 const LanguageContext = createContext(null);
 
@@ -7,8 +7,10 @@ export function LanguageProvider({ children }) {
   const [lang, setLang] = useState('en');
 
   const t = useCallback((key, vars) => translate(lang, key, vars), [lang]);
+  // tn(englishName) — translates a proper noun (station / line / landmark).
+  const tn = useCallback((name) => translateName(lang, name), [lang]);
 
-  const value = useMemo(() => ({ lang, setLang, t }), [lang, t]);
+  const value = useMemo(() => ({ lang, setLang, t, tn }), [lang, t, tn]);
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }

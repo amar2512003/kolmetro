@@ -26,7 +26,7 @@ const ICON_WRAPPER_STYLES = {
 // onSelect(stationId) fires whenever the user picks a station or a landmark
 // (landmarks resolve to their nearest operational station).
 export function StationSearchInput({ variant, labelKey, allStations, onSelect }) {
-  const { t } = useTranslation();
+  const { t, tn } = useTranslation();
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const [landmarkNote, setLandmarkNote] = useState(null);
@@ -40,7 +40,7 @@ export function StationSearchInput({ variant, labelKey, allStations, onSelect })
   };
 
   const handlePickStation = (station) => {
-    setQuery(station.name);
+    setQuery(tn(station.name));
     setLandmarkNote(null);
     setOpen(false);
     onSelect(station.id);
@@ -48,8 +48,8 @@ export function StationSearchInput({ variant, labelKey, allStations, onSelect })
 
   const handlePickLandmark = (landmark, station, distanceKm) => {
     if (!station) return;
-    setQuery(landmark.name);
-    setLandmarkNote(`📍 ${station.name} — ${t('approxAway', { d: distanceKm.toFixed(1) })}`);
+    setQuery(tn(landmark.name));
+    setLandmarkNote(`📍 ${tn(station.name)} — ${t('approxAway', { d: distanceKm.toFixed(1) })}`);
     setOpen(false);
     onSelect(station.id);
   };

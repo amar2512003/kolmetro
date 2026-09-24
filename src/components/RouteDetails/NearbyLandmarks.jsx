@@ -36,7 +36,7 @@ function LandmarkPhoto({ name }) {
 }
 
 export function NearbyLandmarks({ stationId }) {
-  const { t } = useTranslation();
+  const { t, tn } = useTranslation();
   const nearby = useMemo(() => (stationId ? findLandmarksNear(stationId) : []), [stationId]);
 
   if (nearby.length === 0) return null;
@@ -69,13 +69,13 @@ export function NearbyLandmarks({ stationId }) {
                 className="text-neutral-800 leading-tight truncate"
                 style={{ fontFamily: "'Caveat', cursive", fontSize: '1.35rem', fontWeight: 700 }}
               >
-                {landmark.name}
+                {tn(landmark.name)}
               </p>
               <p
                 className="text-neutral-500 -mt-1"
                 style={{ fontFamily: "'Caveat', cursive", fontSize: '1rem' }}
               >
-                {distanceKm.toFixed(1)} km away
+                {t('approxAway', { d: distanceKm.toFixed(1) })}
               </p>
             </div>
           </div>

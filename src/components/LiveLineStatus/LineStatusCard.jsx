@@ -42,6 +42,7 @@ function useStatusBadge(result) {
 }
 
 export function LineStatusCard({ lineKey, result }) {
+  const { tn } = useTranslation();
   const meta = metroData[lineKey];
   const badge = useStatusBadge(result);
 
@@ -49,7 +50,7 @@ export function LineStatusCard({ lineKey, result }) {
     <div className={`rounded-lg border p-3 ${badge.cls}`}>
       <div className="flex items-center gap-2 mb-1">
         <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: meta.color }} />
-        <span className="text-sm font-semibold text-white">{lineTimetables[lineKey].name}</span>
+        <span className="text-sm font-semibold text-white">{tn(lineTimetables[lineKey].name)}</span>
       </div>
       <div className="text-xs leading-snug">{badge.label}</div>
     </div>

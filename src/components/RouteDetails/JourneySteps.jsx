@@ -8,18 +8,18 @@ const TYPE_SPEED_MS = 28;
 const PAUSE_BEFORE_LINE_MS = 200;
 const LINE_GROW_MS = 550;
 
-function stepText(step, t) {
+function stepText(step, t, tn) {
   switch (step.kind) {
     case 'board':
-      return `${t('board')} ${step.lineName} ${t('from')} ${step.stationName}.`;
+      return `${t('board')} ${tn(step.lineName)} ${t('from')} ${tn(step.stationName)}.`;
     case 'change':
-      return `${t('atStation')} ${step.stationName}, ${t('changeToThe')} ${step.lineName}.`;
+      return `${t('atStation')} ${tn(step.stationName)}, ${t('changeToThe')} ${tn(step.lineName)}.`;
     case 'maintenance': {
       const modeLabel = step.mode === 'bus' ? t('maintenanceDetourBus') : t('maintenanceDetourAuto');
-      return `${t('maintenanceDetour', { mode: modeLabel })} ${step.stationName}.`;
+      return `${t('maintenanceDetour', { mode: modeLabel })} ${tn(step.stationName)}.`;
     }
     case 'arrive':
-      return `${t('continueToDestination')} ${step.stationName}.`;
+      return `${t('continueToDestination')} ${tn(step.stationName)}.`;
     default:
       return '';
   }
@@ -61,10 +61,10 @@ function statusBadge(scheduleStatus, t) {
 }
 
 export function JourneySteps({ route, stationMap }) {
-  const { t } = useTranslation();
+  const { t, tn } = useTranslation();
 
   const steps = useMemo(() => buildTimelineSteps(route, stationMap), [route, stationMap]);
-  const stepTexts = useMemo(() => steps.map((s) => stepText(s, t)), [steps, t]);
+  const stepTexts = useMemo(() => steps.map((s) => stepText(s, t, tn)), [steps, t, tn]);
   const travel = useMemo(() => calculateTravel(route), [route]);
 
   // typed[i]: the currently-revealed substring of stepTexts[i].

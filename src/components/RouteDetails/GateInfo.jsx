@@ -1,7 +1,7 @@
 import { useTranslation } from '../../context/LanguageContext.jsx';
 
 export function GateInfo({ startStation, endStation }) {
-  const { t } = useTranslation();
+  const { t, tn } = useTranslation();
 
   if (!startStation?.gates && !endStation?.gates) return null;
 
@@ -16,7 +16,7 @@ export function GateInfo({ startStation, endStation }) {
               <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8 21h8m-4-4v4M3 7l9-4 9 4v11a1 1 0 01-1 1H4a1 1 0 01-1-1V7z" />
               </svg>
-              {startStation.name} ({t('startLabel')})
+              {tn(startStation.name)} ({t('startLabel')})
             </div>
             <div className="flex flex-col gap-1.5">
               {Object.entries(startStation.gates).map(([gateNum, desc]) => (
@@ -35,7 +35,7 @@ export function GateInfo({ startStation, endStation }) {
               <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
-              {endStation.name} ({t('destinationLabelShort')})
+              {tn(endStation.name)} ({t('destinationLabelShort')})
             </div>
             <div className="flex flex-col gap-1.5">
               {Object.entries(endStation.gates).map(([gateNum, desc]) => (
