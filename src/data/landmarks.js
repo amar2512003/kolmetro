@@ -42,8 +42,8 @@ export const landmarks = [
   { name: 'Metcalfe Hall', lat: 22.5745, lng: 88.3462, source: 'osm', verified: true },
   { name: 'Currency Building', lat: 22.57056, lng: 88.35028, source: 'wikipedia', verified: true },
   { name: 'Nicco Park', lat: 22.57111, lng: 88.42167, source: 'wikipedia', verified: true },
-  { name: 'Aquatica Water Park', lat: 22.598, lng: 88.450, source: 'osm', verified: true },
-  { name: 'Snow Park', lat: 22.5795, lng: 88.4700, source: 'osm', verified: true },
+  { name: 'Aquatica Water Park', lat: 22.5622, lng: 88.4653, source: 'google_maps', verified: true },
+  { name: 'Snow Park', lat: 22.5794, lng: 88.4601, source: 'google_maps', verified: true }, // 6th floor Axis Mall, Action Area 1
   { name: 'Biswa Bangla Gate', lat: 22.57861, lng: 88.47167, source: 'wikipedia', verified: true },
   { name: 'Tram Museum Smaranika', lat: 22.564955, lng: 88.346346, source: 'wikipedia', verified: true },
   { name: 'Rail Museum Howrah', lat: 22.578, lng: 88.340, source: 'wikipedia', verified: true },
@@ -66,18 +66,18 @@ export const landmarks = [
   { name: 'Tangra Chinatown', lat: 22.5373, lng: 88.3961, source: 'osm', verified: true }, // TODO: map-check (area landmark — center of Tangra)
   { name: 'Burrabazar', lat: 22.5747, lng: 88.3520, source: 'osm', verified: true }, // TODO: map-check (area landmark — center of the wholesale district)
   { name: 'Gariahat Market', lat: 22.5192, lng: 88.3672, source: 'osm', verified: true }, // TODO: map-check (Gariahat crossing)
-  { name: 'Hatibagan Market', lat: 22.6047, lng: 88.3744, source: 'osm', verified: true }, // TODO: map-check (Hatibagan, North Kolkata)
+  { name: 'Hatibagan Market', lat: 22.5975, lng: 88.3703, source: 'google_maps', verified: true }, // Bidhan Sarani / Aurobindo Sarani crossing
   { name: 'Dakshinapan Shopping Complex', lat: 22.5099, lng: 88.3670, source: 'osm', verified: true }, // TODO: map-check (Gol Park/Dhakuria)
   { name: 'South City Mall', lat: 22.5014, lng: 88.3616, source: 'wikipedia', verified: true },
   { name: 'Quest Mall', lat: 22.539083, lng: 88.365594, source: 'wikipedia', verified: true },
-  { name: 'Mani Square Mall', lat: 22.5744, lng: 88.3946, source: 'osm', verified: true }, // TODO: map-check (164/1 Manicktala Main Rd, EM Bypass)
+  { name: 'Mani Square Mall', lat: 22.5778, lng: 88.4017, source: 'google_maps', verified: true }, // 164/1 Maniktala Main Rd, EM Bypass
   { name: 'City Centre 1 Salt Lake', lat: 22.5871, lng: 88.4078, source: 'osm', verified: true }, // TODO: map-check (Sector 1, Salt Lake — near City Center metro)
-  { name: 'City Centre 2 New Town', lat: 22.5985, lng: 88.4772, source: 'osm', verified: true }, // TODO: map-check (New Town, Action Area II)
-  { name: 'Forum Courtyard', lat: 22.5367, lng: 88.3480, source: 'osm', verified: true }, // TODO: map-check (10/3 Elgin Road, Bhowanipore)
-  { name: 'Acropolis Mall', lat: 22.5163, lng: 88.3958, source: 'osm', verified: true }, // TODO: map-check (1858/1 Rajdanga Main Road, Kasba)
-  { name: 'Axis Mall', lat: 22.6010, lng: 88.4740, source: 'osm', verified: true }, // TODO: map-check (Action Area I, New Town — corrected from a Kasba-area guess)
+  { name: 'City Centre 2 New Town', lat: 22.6228, lng: 88.4503, source: 'google_maps', verified: true }, // Chinar Park, Rajarhat Main Rd
+  { name: 'Forum Courtyard', lat: 22.5384, lng: 88.3513, source: 'google_maps', verified: true }, // 10/3 Elgin Road (Lala Lajpat Rai Sarani)
+  { name: 'Acropolis Mall', lat: 22.5151, lng: 88.3933, source: 'google_maps', verified: true }, // 1858/1 Rajdanga Main Road, Kasba
+  { name: 'Axis Mall', lat: 22.5796, lng: 88.4599, source: 'google_maps', verified: true }, // CF Block, Action Area 1C, New Town
   { name: 'Avani Riverside Mall', lat: 22.5632, lng: 88.3237, source: 'wikipedia', verified: true },
-  { name: 'Lake Mall', lat: 22.5083, lng: 88.3520, source: 'osm', verified: true }, // TODO: map-check (Rashbehari Ave Extension, Lake Gardens)
+  { name: 'Lake Mall', lat: 22.5168, lng: 88.3491, source: 'google_maps', verified: true }, // 104 Rash Behari Avenue, near Kalighat Metro
   { name: 'Salt Lake Sector V', lat: 22.5726, lng: 88.4338, source: 'osm', verified: true }, // TODO: map-check (area landmark — IT hub center)
   { name: 'Dacres Lane', lat: 22.5646, lng: 88.3505, source: 'osm', verified: true }, // TODO: map-check (off Esplanade/Dalhousie)
   { name: 'Camac Street', lat: 22.5457, lng: 88.3542, source: 'osm', verified: true }, // TODO: map-check (area landmark — street midpoint)
@@ -116,37 +116,37 @@ export const landmarks = [
   // with no coordinate — for those we used the nearest sourced locality/landmark
   // as an anchor (noted per entry) rather than a literal scraped coordinate.
   // TODO(human map-check): confirm every 'osm' entry below against Google Maps.
-  { name: "Elliot Park", lat: 22.5480, lng: 88.3524, source: 'osm', verified: true }, // TODO: map-check (Central Kolkata, Maidan-adjacent — per Wikipedia's List of parks in Kolkata)
+  { name: "Elliot Park", lat: 22.5475, lng: 88.3478, source: 'google_maps', verified: true }, // JN Road (Chowringhee), opposite Maidan, near Maidan Metro Station
   { name: "Citizen's Park", lat: 22.4975, lng: 88.3626, source: 'osm', verified: true }, // TODO: map-check (Golf Green, South Kolkata)
-  { name: 'Curzon Park', lat: 22.5657, lng: 88.3512, source: 'osm', verified: true }, // TODO: map-check (now Surendranath Park, near Esplanade/Dharmatala)
-  { name: 'Subhash Sarobar', lat: 22.5721, lng: 88.3985, source: 'osm', verified: true }, // TODO: map-check (Beliaghata/Phoolbagan, off EM Bypass — Wikipedia article has no coord template)
+  { name: 'Curzon Park', lat: 22.5650, lng: 88.3490, source: 'google_maps', verified: true }, // Surendranath Park, Esplanade, Rani Rashmoni Ave / Chowringhee
+  { name: 'Subhash Sarobar', lat: 22.5703, lng: 88.4016, source: 'google_maps', verified: true }, // Center of lake and park, Beliaghata/Phoolbagan
   { name: 'Agri Horticultural Society of India', lat: 22.5359, lng: 88.3309, source: 'osm', verified: true }, // TODO: map-check (Alipore Road, near Alipore Zoo)
   { name: 'Chintamoni Kar Bird Sanctuary', lat: 22.4295, lng: 88.4007, source: 'wikipedia', verified: true },
-  { name: 'Nalban Boating Complex', lat: 22.5670, lng: 88.4090, source: 'osm', verified: true }, // TODO: map-check (East Kolkata Wetlands, near Science City)
+  { name: 'Nalban Boating Complex', lat: 22.5642, lng: 88.4283, source: 'google_maps', verified: true }, // Sector IV/V, Salt Lake, East Kolkata Wetlands
   { name: 'Safari Park', lat: 22.5205, lng: 88.3660, source: 'osm', verified: true }, // TODO: map-check — corrected from a New Town/Rajarhat-area guess: Wikipedia's List of parks in Kolkata places it in Gariahat, not New Town
   { name: 'Deshabandhu Park', lat: 22.5240, lng: 88.3450, source: 'osm', verified: true }, // TODO: map-check (Bhowanipore)
   { name: 'Maddox Square', lat: 22.5270, lng: 88.3630, source: 'osm', verified: true }, // TODO: map-check (Bakul Bagan, Elgin area)
-  { name: 'Allen Park', lat: 22.5502, lng: 88.3568, source: 'osm', verified: true }, // TODO: map-check — corrected: Wikipedia's Camac Street article confirms Allen Park sits exactly at the Park Street/Camac Street junction; this is that junction's coordinate, not a literal Wikipedia {{coord}} for the park itself
+  { name: 'Allen Park', lat: 22.5502, lng: 88.3545, source: 'google_maps', verified: true }, // 28 Park Street, between Camac St and Wood St
   { name: 'Mohammad Ali Park', lat: 22.5720, lng: 88.3550, source: 'osm', verified: true }, // TODO: map-check (Chandni Chowk, Central Kolkata)
   { name: 'College Square', lat: 22.5750, lng: 88.3640, source: 'osm', verified: true }, // TODO: map-check (adjacent to College Street)
   { name: 'Santragachi Jhel', lat: 22.5808, lng: 88.2834, source: 'osm', verified: true }, // TODO: map-check (Santragachi Jheel, Howrah — corrected lng from a guess ~1.5km off)
-  { name: 'Rabindra Sadan', lat: 22.5412, lng: 88.3473, source: 'osm', verified: true }, // TODO: map-check (coordinate is the adjacent Rabindra Sadan metro station — building itself has no standalone Wikipedia coordinate)
-  { name: 'Sisir Mancha', lat: 22.5480, lng: 88.3500, source: 'osm', verified: true }, // TODO: map-check (Nandan/Rabindra Sadan cultural complex, AJC Bose Road)
-  { name: 'Kala Mandir', lat: 22.5450, lng: 88.3540, source: 'osm', verified: true }, // TODO: map-check (Shakespeare Sarani area)
-  { name: 'Gyan Manch', lat: 22.5460, lng: 88.3520, source: 'osm', verified: true }, // TODO: map-check (SN Banerjee Road area)
-  { name: 'Madhusudan Mancha', lat: 22.5440, lng: 88.3510, source: 'osm', verified: true }, // TODO: map-check (Southern Avenue/Dover Lane area)
-  { name: 'Star Theatre', lat: 22.5975, lng: 88.3705, source: 'osm', verified: true }, // TODO: map-check (79/3/4 Bidhan Sarani, Hatibagan — coordinate is the Hatibagan locality, no standalone building coordinate found)
+  { name: 'Rabindra Sadan', lat: 22.5419, lng: 88.3447, source: 'google_maps', verified: true }, // Cultural theatre complex at 71 AJC Bose Rd / Cathedral Rd
+  { name: 'Sisir Mancha', lat: 22.5415, lng: 88.3444, source: 'google_maps', verified: true }, // Inside Rabindra Sadan-Nandan cultural complex, 1/1 AJC Bose Rd
+  { name: 'Kala Mandir', lat: 22.5441, lng: 88.3597, source: 'google_maps', verified: true }, // 48 Shakespeare Sarani, Moira St / Rawdon St crossing
+  { name: 'Gyan Manch', lat: 22.5439, lng: 88.3514, source: 'google_maps', verified: true }, // 11 Pretoria Street, inside Abhinav Bharati High School
+  { name: 'Madhusudan Mancha', lat: 22.5083, lng: 88.3664, source: 'google_maps', verified: true }, // Dhakuria, adjacent to Dakshinapan Shopping Complex on Gariahat Rd South
+  { name: 'Star Theatre', lat: 22.5941, lng: 88.3710, source: 'google_maps', verified: true }, // 79/3/4 Bidhan Sarani, Hatibagan crossing
   { name: 'Minerva Theatre', lat: 22.5903, lng: 88.3619, source: 'wikipedia', verified: true },
-  { name: 'Girish Mancha', lat: 22.603222, lng: 88.367472, source: 'osm', verified: true }, // corrected: Wikipedia's own {{coord}} (22.604075, 88.364769) drops the pin at the Bagbazar riverside/ghat, not the actual venue — confirmed visually via Google Maps that the real building sits ~280m east, near Girish Avenue/Ramakrishna Lane. This coordinate is the Girish Avenue Sub Post Office (same PIN 700003 locality) as a closer anchor. TODO: map-check to fine-tune to the exact building if needed.
-  { name: 'Nazrul Tirtha', lat: 22.6035, lng: 88.4780, source: 'osm', verified: true }, // TODO: map-check — corrected from a Salt Lake-area guess: it's beside DLF IT Park, Action Area I, New Town
+  { name: 'Girish Mancha', lat: 22.6041, lng: 88.3648, source: 'google_maps', verified: true }, // 76/1 Bagbazar Street
+  { name: 'Nazrul Tirtha', lat: 22.5817, lng: 88.4532, source: 'google_maps', verified: true }, // Action Area I, New Town, Biswa Bangla Sarani
   { name: 'Satyajit Ray Film and Television Institute', lat: 22.4848, lng: 88.3953, source: 'wikipedia', verified: true },
   { name: 'Asiatic Society', lat: 22.5552, lng: 88.3505, source: 'wikipedia', verified: true },
   { name: 'Belvedere Estate', lat: 22.533206, lng: 88.333318, source: 'wikipedia', verified: true }, // National Library of India occupies this same site — coordinate is Belvedere House
   { name: 'Standard Buildings', lat: 22.573, lng: 88.348, source: 'osm', verified: true }, // TODO: map-check (no dedicated Wikipedia article — likely the former Standard Life Assurance building near BBD Bagh/Council House St, Esplanade)
   { name: 'Metropolitan Building', lat: 22.5637, lng: 88.3516, source: 'wikipedia', verified: true },
   { name: 'Dead Letter Office', lat: 22.5715, lng: 88.3505, source: 'osm', verified: true }, // TODO: map-check (no dedicated Wikipedia article — historically the original Telegraph Office corner building on Hare St, opposite Currency Building)
-  { name: 'Clive House', lat: 22.6236, lng: 88.4173, source: 'wikipedia', verified: true }, // corrected from a BBD Bagh-area guess: actual Clive House is ~10km north, on Rashtraguru Avenue, Nagerbazar, South Dum Dum (coordinate is the Nagerbazar locality reference, per South Dum Dum/Nagerbazar articles — building itself has no standalone Wikipedia coordinate)
-  { name: 'Hastings House', lat: 22.5375, lng: 88.3272, source: 'osm', verified: true }, // TODO: map-check (20B Judges Court Road, Alipore — no dedicated Wikipedia coordinate; now Institute of Education for Women)
+  { name: 'Clive House', lat: 22.6261, lng: 88.4158, source: 'google_maps', verified: true }, // Bara Kothi, Rastraguru Avenue, Dum Dum
+  { name: 'Hastings House', lat: 22.5280, lng: 88.3320, source: 'google_maps', verified: true }, // Warren Hastings' estate, 20B Judges Court Road, Alipore
   { name: 'Sovabazar Rajbari', lat: 22.5961, lng: 88.3653, source: 'wikipedia', verified: true }, // coordinate is the Shobhabazar locality reference; palace itself (33–36 Raja Nabakrishna St) has no standalone Wikipedia coordinate
   { name: 'Pathuriaghata Rajbari', lat: 22.5895, lng: 88.3548, source: 'wikipedia', verified: true }, // coordinate is the Pathuriaghata locality reference
   { name: 'Marble Palace Zoo', lat: 22.5820, lng: 88.3595, source: 'wikipedia', verified: true },
@@ -166,7 +166,7 @@ export const landmarks = [
   { name: 'Kudghat', lat: 22.4822, lng: 88.3461, source: 'wikipedia', verified: true }, // corrected — was placed several km north of the actual South Kolkata locality
   { name: 'Royal Calcutta Golf Club', lat: 22.493, lng: 88.355, source: 'wikipedia', verified: true }, // corrected from a Golf Green-area guess to the club's actual Tollygunge site
   { name: 'Royal Calcutta Turf Club', lat: 22.550881, lng: 88.350865, source: 'wikipedia', verified: true },
-  { name: 'Calcutta Cricket and Football Club', lat: 22.5310, lng: 88.3663, source: 'osm', verified: true }, // 19/1 Gurusaday Dutt Road, Ballygunge — no standalone Wikipedia infobox coordinate, geocoded from club's HQ address
+  { name: 'Calcutta Cricket and Football Club', lat: 22.5334, lng: 88.3638, source: 'google_maps', verified: true }, // 19/1 Gurusaday Road, Ballygunge
   { name: 'Netaji Indoor Stadium', lat: 22.5661, lng: 88.3417, source: 'wikipedia', verified: true }, // corrected — was placed ~2km southwest of the actual site beside Eden Gardens
   { name: 'Kolkata Rowing Club', lat: 22.5123, lng: 88.3547, source: 'wikipedia', verified: true }, // listed on Wikipedia as "Calcutta Rowing Club"; Rabindra Sarobar complex
   { name: 'Mohun Bagan Ground', lat: 22.5620, lng: 88.3422, source: 'wikipedia', verified: true },
@@ -174,33 +174,34 @@ export const landmarks = [
   { name: 'Mohammedan Sporting Ground', lat: 22.5623, lng: 88.3459, source: 'wikipedia', verified: true }, // corrected — was placed several hundred metres west of the actual Maidan tent site
   { name: 'University of Calcutta', lat: 22.5751, lng: 88.3634, source: 'osm', verified: true }, // Senate House / Darbhanga Building campus, 87/1 College Street
   { name: 'Jadavpur University', lat: 22.4993, lng: 88.3718, source: 'osm', verified: true }, // main campus, Jadavpur
-  { name: 'Presidency University', lat: 22.5751, lng: 88.3628, source: 'osm', verified: true }, // College Street campus, adjacent to Calcutta University
+  { name: 'Presidency University', lat: 22.5764, lng: 88.3622, source: 'google_maps', verified: true }, // 86/1 College Street campus
   { name: "St. Xavier's College", lat: 22.5514, lng: 88.3512, source: 'osm', verified: true }, // 30 Park Street (Mother Teresa Sarani)
-  { name: 'Scottish Church College', lat: 22.5904, lng: 88.3667, source: 'osm', verified: true }, // 1 & 3 Urquhart Square, near Maniktala — corrected from a College Street-area guess
-  { name: 'Bethune College', lat: 22.5921, lng: 88.3672, source: 'osm', verified: true }, // 181 Bidhan Sarani
+  { name: 'Scottish Church College', lat: 22.5883, lng: 88.3698, source: 'google_maps', verified: true }, // 1 & 3 Urquhart Square
+  { name: 'Bethune College', lat: 22.5883, lng: 88.3679, source: 'google_maps', verified: true }, // 181 Bidhan Sarani, near Azad Hind Bagh (Hedua)
   { name: 'Loreto College', lat: 22.5498, lng: 88.3520, source: 'osm', verified: true }, // 7 Middleton Row, off Park Street
-  { name: 'Indian Statistical Institute', lat: 22.6614, lng: 88.3775, source: 'osm', verified: true }, // 203 B.T. Road, Baranagar — corrected, was placed short of the actual Baranagar campus
-  { name: 'Bose Institute', lat: 22.5847, lng: 88.3628, source: 'osm', verified: true }, // 93/1 Acharya Prafulla Chandra Road
-  { name: 'Saha Institute of Nuclear Physics', lat: 22.5793, lng: 88.4020, source: 'osm', verified: true }, // 1/AF Bidhannagar, Sector 1, Salt Lake — corrected from a guess several km east
-  { name: 'Marine Engineering and Research Institute', lat: 22.5060, lng: 88.3159, source: 'osm', verified: true }, // P-19 Taratala Road (now IMU Kolkata campus) — corrected from a guess placed north near Park Circus
+  { name: 'Indian Statistical Institute', lat: 22.6481, lng: 88.3767, source: 'google_maps', verified: true }, // 203 B.T. Road, Baranagar
+  { name: 'Bose Institute', lat: 22.5796, lng: 88.3732, source: 'google_maps', verified: true }, // Main campus, 93/1 Acharya Prafulla Chandra Road, Rajabazar
+  { name: 'Saha Institute of Nuclear Physics', lat: 22.6017, lng: 88.4175, source: 'google_maps', verified: true }, // 1/AF Bidhannagar, Sector 1, Salt Lake
+  { name: 'Heritage Institute of Technology', lat: 22.5185, lng: 88.4163, source: 'google_maps', verified: true }, // Chowbaga Road, Anandapur — near Hemanta Mukhopadhyay metro station (Orange Line)
+  { name: 'Marine Engineering and Research Institute', lat: 22.5267, lng: 88.2974, source: 'google_maps', verified: true }, // P-19 Taratala Road (now IMU Kolkata), near Brace Bridge
   { name: 'Medical College and Hospital Kolkata', lat: 22.5763, lng: 88.3628, source: 'osm', verified: true }, // 88 College Street
   { name: 'IPGMER and SSKM Hospital', lat: 22.5378, lng: 88.3429, source: 'osm', verified: true }, // 244 AJC Bose Road, Bhowanipore
-  { name: 'R G Kar Medical College', lat: 22.5978, lng: 88.3733, source: 'osm', verified: true }, // Belgachia/Shyambazar campus — corrected slightly east
-  { name: 'National Medical College', lat: 22.5445, lng: 88.3699, source: 'osm', verified: true }, // 32 Gorachand Road, Beniapukur — corrected, was placed ~5km north near College Street
+  { name: 'R G Kar Medical College', lat: 22.6042, lng: 88.3783, source: 'google_maps', verified: true }, // 1 Khudiram Bose Sarani, Belgachia
+  { name: 'National Medical College', lat: 22.5464, lng: 88.3699, source: 'google_maps', verified: true }, // 32 Gorachand Road, Beniapukur
   { name: 'Nil Ratan Sircar Medical College', lat: 22.5652, lng: 88.3691, source: 'wikipedia', verified: true }, // 138 AJC Bose Road, Sealdah
   { name: 'Lal Bazar Police Headquarters', lat: 22.5729, lng: 88.3527, source: 'osm', verified: true }, // Lalbazar Street, near BBD Bagh
-  { name: 'Salt Lake Central Park Mela Ground', lat: 22.5850, lng: 88.4091, source: 'osm', verified: true }, // Central Park, Sector 1, Salt Lake — corrected, was placed several km east
-  { name: 'Milan Mela Ground', lat: 22.5270, lng: 88.3963, source: 'osm', verified: true }, // EM Bypass near Science City — corrected, was placed several km north
+  { name: 'Salt Lake Central Park Mela Ground', lat: 22.5865, lng: 88.4200, source: 'google_maps', verified: true }, // Boi Mela Prangan, Central Park eastern side near Karunamoyee
+  { name: 'Milan Mela Ground', lat: 22.5454, lng: 88.3945, source: 'google_maps', verified: true }, // Biswa Bangla Mela Prangan (WBTPO), JBS Haldane Ave opposite Science City
   { name: 'Nazrul Manch', lat: 22.5123, lng: 88.3560, source: 'wikipedia', verified: true }, // Southern Avenue, adjacent to Rabindra Sarobar (street-level anchor, auditorium has no dedicated infobox coordinate)
   { name: 'Uttam Mancha', lat: 22.5220, lng: 88.3540, source: 'osm', verified: true }, // Manohar Pukur Road, Hazra
   { name: 'Sarat Sadan', lat: 22.4981, lng: 88.3108, source: 'wikipedia', verified: true }, // Behala neighbourhood anchor (street-level, auditorium has no dedicated infobox coordinate)
   { name: 'Phanibhusan Vidya Binod Jatra Mancha', lat: 22.59, lng: 88.37, source: 'manual', verified: false }, // TODO: re-checked — no venue by this exact name found. Closest lead: the Paschim Banga Jatra Academy (West Bengal's state jatra/folk-theatre academy), at 76/1 Bagbazar Street — the same address as Girish Mancha in this file (22.603222, 88.367472) — hosts named halls for jatra, and "Vidyabinod" is a real Bengali dramatist surname (cf. Kshirode Prasad Vidyavinode), so this may be a hall inside that academy named after a "Phanibhushan Vidyabinod". Not confirmed — needs a person to verify before sourcing.
   { name: 'Sukanta Sadan', lat: 22.5720, lng: 88.3900, source: 'osm', verified: true }, // CIT Road near Phulbagan crossing
-  { name: 'Rabindra Okakura Bhavan', lat: 22.5978, lng: 88.4680, source: 'osm', verified: true }, // New Town, near Eco Park
-  { name: 'Kolkata Museum of Modern Art', lat: 22.6100, lng: 88.4750, source: 'osm', verified: true }, // New Town/Rajarhat site
+  { name: 'Rabindra Okakura Bhavan', lat: 22.5894, lng: 88.4094, source: 'google_maps', verified: true }, // DD-27/A/1, Sector 1, Salt Lake, behind City Centre 1
+  { name: 'Kolkata Museum of Modern Art', lat: 22.5986, lng: 88.4675, source: 'google_maps', verified: true }, // Plot II-E/3, Action Area II, near Eco Park Gate 4
   { name: 'Ghose Grapes Garden', lat: 22.61, lng: 88.39, source: 'manual', verified: false }, // TODO: re-checked (incl. "Ghosh Bagan"/"Angur Bagan" as possible Bengali-name variants) — still no match. No historic Kolkata garden, estate, or locality by this name turns up in Wikipedia, heritage sources, or neighbourhood-name lists. Possibly a private/informal name, a long-defunct estate, or a name transcribed incorrectly upstream — needs a person to confirm what/where this is before sourcing.
-  { name: 'Gitanjali Stadium', lat: 22.4780, lng: 88.3650, source: 'wikipedia', verified: true }, // near Gitanjali metro station, Naktala
-  { name: 'Kishore Bharati Krirangan', lat: 22.4935, lng: 88.3717, source: 'wikipedia', verified: true }, // Bijoygarh, Jadavpur
+  { name: 'Gitanjali Stadium', lat: 22.5150, lng: 88.3939, source: 'google_maps', verified: true }, // Rajdanga, Kasba near Ruby
+  { name: 'Kishore Bharati Krirangan', lat: 22.4942, lng: 88.3944, source: 'google_maps', verified: true }, // Survey Park/Santoshpur, EM Bypass
   { name: 'Rabindra Sarobar Stadium', lat: 22.5120, lng: 88.3600, source: 'wikipedia', verified: true }, // Southern Avenue, adjacent to Rabindra Sarobar
   { name: 'East Bengal Club Tent', lat: 22.5645, lng: 88.3410, source: 'wikipedia', verified: true }, // Maidan club-tent cluster, near Eden Gardens
   { name: 'Mohun Bagan Club Tent', lat: 22.5650, lng: 88.3415, source: 'wikipedia', verified: true }, // Maidan club-tent cluster, near Eden Gardens
